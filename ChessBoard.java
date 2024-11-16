@@ -1,5 +1,5 @@
 public class ChessBoard {
-    public ChessPiece[][] board = new ChessPiece[8][8]; // создаем поле длЯ игры
+    public ChessPiece[][] board = new ChessPiece[8][8]; // СЃРѕР·РґР°РµРј РїРѕР»Рµ РґР»СЏ РёРіСЂС‹
     String nowPlayer;
 
     public ChessBoard(String nowPlayer) {
@@ -19,15 +19,15 @@ public class ChessBoard {
             }
 
             if (board[startLine][startColumn].canMoveToPosition(this, startLine, startColumn, endLine, endColumn)) {
-                // …сли фигура С король или ладьЯ, устанавливаем check = false
+                // Р•СЃР»Рё С„РёРіСѓСЂР° вЂ” РєРѕСЂРѕР»СЊ РёР»Рё Р»Р°РґСЊСЏ, СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј check = false
                 if (board[startLine][startColumn].getSymbol().equals("K") ||
                         board[startLine][startColumn].getSymbol().equals("R")) {
                     board[startLine][startColumn].check = false;
                 }
 
-                board[endLine][endColumn] = board[startLine][startColumn]; // перемещаем фигуру
-                board[startLine][startColumn] = null; // освобождаем предыдущую Ячейку
-                this.nowPlayer = this.nowPlayerColor().equals("White") ? "Black" : "White"; // переключаем ход
+                board[endLine][endColumn] = board[startLine][startColumn]; // РїРµСЂРµРјРµС‰Р°РµРј С„РёРіСѓСЂСѓ
+                board[startLine][startColumn] = null; // РѕСЃРІРѕР±РѕР¶РґР°РµРј РїСЂРµРґС‹РґСѓС‰СѓСЋ СЏС‡РµР№РєСѓ
+                this.nowPlayer = this.nowPlayerColor().equals("White") ? "Black" : "White"; // РїРµСЂРµРєР»СЋС‡Р°РµРј С…РѕРґ
 
                 return true;
             } else {
@@ -38,10 +38,10 @@ public class ChessBoard {
         }
     }
 
-    // Њетод длЯ рокировки по 0 столбцу
+    // РњРµС‚РѕРґ РґР»СЏ СЂРѕРєРёСЂРѕРІРєРё РїРѕ 0 СЃС‚РѕР»Р±С†Сѓ
     public boolean castling0() {
         if (nowPlayer.equals("White")) {
-            // Џроверка условий рокировки длЯ белого королЯ и ладьи на 0 столбце
+            // РџСЂРѕРІРµСЂРєР° СѓСЃР»РѕРІРёР№ СЂРѕРєРёСЂРѕРІРєРё РґР»СЏ Р±РµР»РѕРіРѕ РєРѕСЂРѕР»СЏ Рё Р»Р°РґСЊРё РЅР° 0 СЃС‚РѕР»Р±С†Рµ
             if (board[0][0] != null && board[0][4] != null &&
                     board[0][0].getSymbol().equals("R") && board[0][4].getSymbol().equals("K") &&
                     board[0][0].getColor().equals("White") && board[0][4].getColor().equals("White") &&
@@ -49,7 +49,7 @@ public class ChessBoard {
                     board[0][1] == null && board[0][2] == null && board[0][3] == null &&
                     !new King("White").isUnderAttack(this, 0, 2)) {
 
-                // ‚ыполнение рокировки
+                // Р’С‹РїРѕР»РЅРµРЅРёРµ СЂРѕРєРёСЂРѕРІРєРё
                 board[0][4] = null;
                 board[0][2] = new King("White");
                 board[0][2].check = false;
@@ -57,11 +57,11 @@ public class ChessBoard {
                 board[0][3] = new Rook("White");
                 board[0][3].check = false;
 
-                nowPlayer = "Black"; // следующий ход
+                nowPlayer = "Black"; // СЃР»РµРґСѓСЋС‰РёР№ С…РѕРґ
                 return true;
             }
         } else {
-            // Џроверка условий рокировки длЯ черного королЯ и ладьи на 0 столбце
+            // РџСЂРѕРІРµСЂРєР° СѓСЃР»РѕРІРёР№ СЂРѕРєРёСЂРѕРІРєРё РґР»СЏ С‡РµСЂРЅРѕРіРѕ РєРѕСЂРѕР»СЏ Рё Р»Р°РґСЊРё РЅР° 0 СЃС‚РѕР»Р±С†Рµ
             if (board[7][0] != null && board[7][4] != null &&
                     board[7][0].getSymbol().equals("R") && board[7][4].getSymbol().equals("K") &&
                     board[7][0].getColor().equals("Black") && board[7][4].getColor().equals("Black") &&
@@ -69,7 +69,7 @@ public class ChessBoard {
                     board[7][1] == null && board[7][2] == null && board[7][3] == null &&
                     !new King("Black").isUnderAttack(this, 7, 2)) {
 
-                // ‚ыполнение рокировки
+                // Р’С‹РїРѕР»РЅРµРЅРёРµ СЂРѕРєРёСЂРѕРІРєРё
                 board[7][4] = null;
                 board[7][2] = new King("Black");
                 board[7][2].check = false;
@@ -77,17 +77,17 @@ public class ChessBoard {
                 board[7][3] = new Rook("Black");
                 board[7][3].check = false;
 
-                nowPlayer = "White"; // следующий ход
+                nowPlayer = "White"; // СЃР»РµРґСѓСЋС‰РёР№ С…РѕРґ
                 return true;
             }
         }
         return false;
     }
 
-    // Њетод длЯ рокировки по 7 столбцу
+    // РњРµС‚РѕРґ РґР»СЏ СЂРѕРєРёСЂРѕРІРєРё РїРѕ 7 СЃС‚РѕР»Р±С†Сѓ
     public boolean castling7() {
         if (nowPlayer.equals("White")) {
-            // Џроверка условий рокировки длЯ белого королЯ и ладьи на 7 столбце
+            // РџСЂРѕРІРµСЂРєР° СѓСЃР»РѕРІРёР№ СЂРѕРєРёСЂРѕРІРєРё РґР»СЏ Р±РµР»РѕРіРѕ РєРѕСЂРѕР»СЏ Рё Р»Р°РґСЊРё РЅР° 7 СЃС‚РѕР»Р±С†Рµ
             if (board[0][7] != null && board[0][4] != null &&
                     board[0][7].getSymbol().equals("R") && board[0][4].getSymbol().equals("K") &&
                     board[0][7].getColor().equals("White") && board[0][4].getColor().equals("White") &&
@@ -95,7 +95,7 @@ public class ChessBoard {
                     board[0][5] == null && board[0][6] == null &&
                     !new King("White").isUnderAttack(this, 0, 6)) {
 
-                // ‚ыполнение рокировки
+                // Р’С‹РїРѕР»РЅРµРЅРёРµ СЂРѕРєРёСЂРѕРІРєРё
                 board[0][4] = null;
                 board[0][6] = new King("White");
                 board[0][6].check = false;
@@ -103,11 +103,11 @@ public class ChessBoard {
                 board[0][5] = new Rook("White");
                 board[0][5].check = false;
 
-                nowPlayer = "Black"; // следующий ход
+                nowPlayer = "Black"; // СЃР»РµРґСѓСЋС‰РёР№ С…РѕРґ
                 return true;
             }
         } else {
-            // Џроверка условий рокировки длЯ черного королЯ и ладьи на 7 столбце
+            // РџСЂРѕРІРµСЂРєР° СѓСЃР»РѕРІРёР№ СЂРѕРєРёСЂРѕРІРєРё РґР»СЏ С‡РµСЂРЅРѕРіРѕ РєРѕСЂРѕР»СЏ Рё Р»Р°РґСЊРё РЅР° 7 СЃС‚РѕР»Р±С†Рµ
             if (board[7][7] != null && board[7][4] != null &&
                     board[7][7].getSymbol().equals("R") && board[7][4].getSymbol().equals("K") &&
                     board[7][7].getColor().equals("Black") && board[7][4].getColor().equals("Black") &&
@@ -115,7 +115,7 @@ public class ChessBoard {
                     board[7][5] == null && board[7][6] == null &&
                     !new King("Black").isUnderAttack(this, 7, 6)) {
 
-                // ‚ыполнение рокировки
+                // Р’С‹РїРѕР»РЅРµРЅРёРµ СЂРѕРєРёСЂРѕРІРєРё
                 board[7][4] = null;
                 board[7][6] = new King("Black");
                 board[7][6].check = false;
@@ -123,7 +123,7 @@ public class ChessBoard {
                 board[7][5] = new Rook("Black");
                 board[7][5].check = false;
 
-                nowPlayer = "White"; // следующий ход
+                nowPlayer = "White"; // СЃР»РµРґСѓСЋС‰РёР№ С…РѕРґ
                 return true;
             }
         }
@@ -156,12 +156,12 @@ public class ChessBoard {
         System.out.println("Player 1(White)");
     }
 
-    // ЏроверЯет, занЯта ли позициЯ фигуры
+    // РџСЂРѕРІРµСЂСЏРµС‚, Р·Р°РЅСЏС‚Р° Р»Рё РїРѕР·РёС†РёСЏ С„РёРіСѓСЂС‹
     public boolean isOccupied(int line, int column) {
         return board[line][column] != null;
     }
 
-    // ЏроверЯет, занЯта ли позициЯ фигурой противоположного цвета
+    // РџСЂРѕРІРµСЂСЏРµС‚, Р·Р°РЅСЏС‚Р° Р»Рё РїРѕР·РёС†РёСЏ С„РёРіСѓСЂРѕР№ РїСЂРѕС‚РёРІРѕРїРѕР»РѕР¶РЅРѕРіРѕ С†РІРµС‚Р°
     public boolean isOpponentPiece(int line, int column, String color) {
         return board[line][column] != null && !board[line][column].getColor().equals(color);
     }

@@ -16,17 +16,17 @@ public class King extends ChessPiece {
             return false;
         }
 
-        // Љороль не может остатьсЯ на месте
+        // РљРѕСЂРѕР»СЊ РЅРµ РјРѕР¶РµС‚ РѕСЃС‚Р°С‚СЊСЃСЏ РЅР° РјРµСЃС‚Рµ
         if (line == toLine && column == toColumn) {
             return false;
         }
 
-        // Љороль ходит на 1 клетку в любом направлении
+        // РљРѕСЂРѕР»СЊ С…РѕРґРёС‚ РЅР° 1 РєР»РµС‚РєСѓ РІ Р»СЋР±РѕРј РЅР°РїСЂР°РІР»РµРЅРёРё
         if (Math.abs(line - toLine) > 1 || Math.abs(column - toColumn) > 1) {
             return false;
         }
 
-        // ЏроверЯем, есть ли на конечной позиции фигура того же цвета
+        // РџСЂРѕРІРµСЂСЏРµРј, РµСЃС‚СЊ Р»Рё РЅР° РєРѕРЅРµС‡РЅРѕР№ РїРѕР·РёС†РёРё С„РёРіСѓСЂР° С‚РѕРіРѕ Р¶Рµ С†РІРµС‚Р°
         if (chessBoard.isOccupied(toLine, toColumn) &&
                 !chessBoard.isOpponentPiece(toLine, toColumn, this.color)) {
             return false;

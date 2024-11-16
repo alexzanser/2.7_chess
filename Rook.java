@@ -11,28 +11,28 @@ public class Rook extends ChessPiece {
 
     @Override
     public boolean canMoveToPosition(ChessBoard chessBoard, int line, int column, int toLine, int toColumn) {
-        // Џроверка на выход за границы доски
+        // РџСЂРѕРІРµСЂРєР° РЅР° РІС‹С…РѕРґ Р·Р° РіСЂР°РЅРёС†С‹ РґРѕСЃРєРё
         if (!chessBoard.checkPos(line) || !chessBoard.checkPos(column) ||
                 !chessBoard.checkPos(toLine) || !chessBoard.checkPos(toColumn)) {
             return false;
         }
 
-        // ‹адьЯ не может остатьсЯ на месте
+        // Р›Р°РґСЊСЏ РЅРµ РјРѕР¶РµС‚ РѕСЃС‚Р°С‚СЊСЃСЏ РЅР° РјРµСЃС‚Рµ
         if (line == toLine && column == toColumn) {
             return false;
         }
 
-        // ‹адьЯ может двигатьсЯ только по прЯмой (либо по той же строке, либо по тому же столбцу)
+        // Р›Р°РґСЊСЏ РјРѕР¶РµС‚ РґРІРёРіР°С‚СЊСЃСЏ С‚РѕР»СЊРєРѕ РїРѕ РїСЂСЏРјРѕР№ (Р»РёР±Рѕ РїРѕ С‚РѕР№ Р¶Рµ СЃС‚СЂРѕРєРµ, Р»РёР±Рѕ РїРѕ С‚РѕРјСѓ Р¶Рµ СЃС‚РѕР»Р±С†Сѓ)
         if (line != toLine && column != toColumn) {
             return false;
         }
 
-        // ЏроверЯем, что путь чист от фигур
+        // РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ РїСѓС‚СЊ С‡РёСЃС‚ РѕС‚ С„РёРіСѓСЂ
         if (!chessBoard.isPathClear(line, column, toLine, toColumn)) {
             return false;
         }
 
-        // ЏроверЯем, есть ли на конечной позиции фигура того же цвета
+        // РџСЂРѕРІРµСЂСЏРµРј, РµСЃС‚СЊ Р»Рё РЅР° РєРѕРЅРµС‡РЅРѕР№ РїРѕР·РёС†РёРё С„РёРіСѓСЂР° С‚РѕРіРѕ Р¶Рµ С†РІРµС‚Р°
         return !chessBoard.isOccupied(toLine, toColumn) ||
                 chessBoard.isOpponentPiece(toLine, toColumn, this.color);
     }

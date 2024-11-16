@@ -16,22 +16,22 @@ public class Queen extends ChessPiece {
             return false;
         }
 
-        // ”ерзь не может остатьсЯ на месте
+        // Р¤РµСЂР·СЊ РЅРµ РјРѕР¶РµС‚ РѕСЃС‚Р°С‚СЊСЃСЏ РЅР° РјРµСЃС‚Рµ
         if (line == toLine && column == toColumn) {
             return false;
         }
 
-        // Џроверка, ходит ли ферзь как слон или ладьЯ
+        // РџСЂРѕРІРµСЂРєР°, С…РѕРґРёС‚ Р»Рё С„РµСЂР·СЊ РєР°Рє СЃР»РѕРЅ РёР»Рё Р»Р°РґСЊСЏ
         if (Math.abs(toLine - line) != Math.abs(toColumn - column) && (line != toLine && column != toColumn)) {
             return false;
         }
 
-        // ЏроверЯем, что путь чист от фигур
+        // РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ РїСѓС‚СЊ С‡РёСЃС‚ РѕС‚ С„РёРіСѓСЂ
         if (!chessBoard.isPathClear(line, column, toLine, toColumn)) {
             return false;
         }
 
-        // ЏроверЯем, есть ли на конечной позиции фигура того же цвета
+        // РџСЂРѕРІРµСЂСЏРµРј, РµСЃС‚СЊ Р»Рё РЅР° РєРѕРЅРµС‡РЅРѕР№ РїРѕР·РёС†РёРё С„РёРіСѓСЂР° С‚РѕРіРѕ Р¶Рµ С†РІРµС‚Р°
         return !chessBoard.isOccupied(toLine, toColumn) ||
                 chessBoard.isOpponentPiece(toLine, toColumn, this.color);
     }

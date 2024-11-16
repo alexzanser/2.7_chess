@@ -11,25 +11,25 @@ public class Horse extends ChessPiece {
 
     @Override
     public boolean canMoveToPosition(ChessBoard chessBoard, int line, int column, int toLine, int toColumn) {
-        // Џроверка на выход за границы доски
+        // РџСЂРѕРІРµСЂРєР° РЅР° РІС‹С…РѕРґ Р·Р° РіСЂР°РЅРёС†С‹ РґРѕСЃРєРё
         if (!chessBoard.checkPos(line) || !chessBoard.checkPos(column) ||
                 !chessBoard.checkPos(toLine) || !chessBoard.checkPos(toColumn)) {
             return false;
         }
 
-        // Џроверка, что конь не остаетсЯ на том же месте
+        // РџСЂРѕРІРµСЂРєР°, С‡С‚Рѕ РєРѕРЅСЊ РЅРµ РѕСЃС‚Р°РµС‚СЃСЏ РЅР° С‚РѕРј Р¶Рµ РјРµСЃС‚Рµ
         if (line == toLine && column == toColumn) {
             return false;
         }
 
-        // Џроверка, что ход "буквой ѓ"
+        // РџСЂРѕРІРµСЂРєР°, С‡С‚Рѕ С…РѕРґ "Р±СѓРєРІРѕР№ Р“"
         int deltaLine = Math.abs(toLine - line);
         int deltaColumn = Math.abs(toColumn - column);
         if (!((deltaLine == 2 && deltaColumn == 1) || (deltaLine == 1 && deltaColumn == 2))) {
             return false;
         }
 
-        // Џроверка, что целеваЯ позициЯ либо пуста, либо занЯта фигурой противника
+        // РџСЂРѕРІРµСЂРєР°, С‡С‚Рѕ С†РµР»РµРІР°СЏ РїРѕР·РёС†РёСЏ Р»РёР±Рѕ РїСѓСЃС‚Р°, Р»РёР±Рѕ Р·Р°РЅСЏС‚Р° С„РёРіСѓСЂРѕР№ РїСЂРѕС‚РёРІРЅРёРєР°
         return !chessBoard.isOccupied(toLine, toColumn) ||
                 chessBoard.isOpponentPiece(toLine, toColumn, this.color);
     }

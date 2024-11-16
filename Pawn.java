@@ -11,33 +11,33 @@ public class Pawn extends ChessPiece {
 
     @Override
     public boolean canMoveToPosition(ChessBoard chessBoard, int line, int column, int toLine, int toColumn) {
-        // Џроверка на выход за границы доски
+        // РџСЂРѕРІРµСЂРєР° РЅР° РІС‹С…РѕРґ Р·Р° РіСЂР°РЅРёС†С‹ РґРѕСЃРєРё
         if (!chessBoard.checkPos(line) || !chessBoard.checkPos(column) ||
                 !chessBoard.checkPos(toLine) || !chessBoard.checkPos(toColumn)) {
             return false;
         }
 
-        // Џешка не может остатьсЯ на месте
+        // РџРµС€РєР° РЅРµ РјРѕР¶РµС‚ РѕСЃС‚Р°С‚СЊСЃСЏ РЅР° РјРµСЃС‚Рµ
         if (line == toLine && column == toColumn) {
             return false;
         }
 
-        int direction = this.color.equals("White") ? 1 : -1; // Ќаправление движениЯ
+        int direction = this.color.equals("White") ? 1 : -1; // РќР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ
 
-        // Џроверка хода на одну клетку вперед
+        // РџСЂРѕРІРµСЂРєР° С…РѕРґР° РЅР° РѕРґРЅСѓ РєР»РµС‚РєСѓ РІРїРµСЂРµРґ
         if (column == toColumn && toLine - line == direction &&
                 !chessBoard.isOccupied(toLine, toColumn)) {
             return true;
         }
 
-        // Џроверка первого хода на две клетки вперед
+        // РџСЂРѕРІРµСЂРєР° РїРµСЂРІРѕРіРѕ С…РѕРґР° РЅР° РґРІРµ РєР»РµС‚РєРё РІРїРµСЂРµРґ
         if (column == toColumn && (line == 1 && this.color.equals("White") || line == 6 && this.color.equals("Black")) &&
                 toLine - line == 2 * direction && !chessBoard.isOccupied(toLine, toColumn) &&
                 !chessBoard.isOccupied(line + direction, column)) {
             return true;
         }
 
-        // Џроверка взЯтиЯ фигуры соперника по диагонали
+        // РџСЂРѕРІРµСЂРєР° РІР·СЏС‚РёСЏ С„РёРіСѓСЂС‹ СЃРѕРїРµСЂРЅРёРєР° РїРѕ РґРёР°РіРѕРЅР°Р»Рё
         return Math.abs(toColumn - column) == 1 && toLine - line == direction &&
                 chessBoard.isOpponentPiece(toLine, toColumn, this.color);
     }
