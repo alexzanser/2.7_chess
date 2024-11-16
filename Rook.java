@@ -5,8 +5,13 @@ public class Rook extends ChessPiece {
     }
 
     @Override
+    public String getSymbol() {
+        return "R";
+    }
+
+    @Override
     public boolean canMoveToPosition(ChessBoard chessBoard, int line, int column, int toLine, int toColumn) {
-        // Проверяем, что начальная и конечная позиции находятся в пределах доски
+        // Проверка на выход за границы доски
         if (!chessBoard.checkPos(line) || !chessBoard.checkPos(column) ||
                 !chessBoard.checkPos(toLine) || !chessBoard.checkPos(toColumn)) {
             return false;
@@ -17,34 +22,18 @@ public class Rook extends ChessPiece {
             return false;
         }
 
-        // Ладья может двигаться только по вертикали или горизонтали
+        // Ладья может двигаться только по прямой (либо по той же строке, либо по тому же столбцу)
         if (line != toLine && column != toColumn) {
-            return false; // Если изменение происходит и по строкам, и по столбцам, ход недопустим
+            return false;
         }
 
-        // Определение направления движения
-        int rowDirection = Integer.compare(toLine, line);
-        int colDirection = Integer.compare(toColumn, column);
-
-        int currentLine = line + rowDirection;
-        int currentColumn = column + colDirection;
-
-        // Проверка на наличие фигур на пути к целевой позиции
-        while (currentLine != toLine || currentColumn != toColumn) {
-            if (chessBoard.board[currentLine][currentColumn] != null) {
-                return false; // Если на пути есть фигура, ладья не может пройти
-            }
-            currentLine += rowDirection;
-            currentColumn += colDirection;
+        // Проверяем, что путь чист от фигур
+        if (!chessBoard.isPathClear(line, column, toLine, toColumn)) {
+            return false;
         }
 
-        // Проверка на наличие фигуры того же цвета на конечной позиции
-        return chessBoard.board[toLine][toColumn] == null ||
-                !chessBoard.board[toLine][toColumn].getColor().equals(this.color);
-    }
-
-    @Override
-    public String getSymbol() {
-        return "R";
+        // Проверяем, есть ли на конечной позиции фигура того же цвета
+        return !chessBoard.isOccupied(toLine, toColumn) ||
+                chessBoard.isOpponentPiece(toLine, toColumn, this.color);
     }
 }

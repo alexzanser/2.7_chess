@@ -5,49 +5,37 @@ public class Bishop extends ChessPiece {
     }
 
     @Override
+    public String getSymbol() {
+        return "B";
+    }
+
+    @Override
     public boolean canMoveToPosition(ChessBoard chessBoard, int line, int column, int toLine, int toColumn) {
-        // ЏроверЯем, что позиции находЯтсЯ в пределах доски
+        // РџСЂРѕРІРµСЂРєР° РЅР° РІС‹С…РѕРґ Р·Р° РіСЂР°РЅРёС†С‹ РґРѕСЃРєРё
         if (!chessBoard.checkPos(line) || !chessBoard.checkPos(column) ||
                 !chessBoard.checkPos(toLine) || !chessBoard.checkPos(toColumn)) {
             return false;
         }
 
-        // ‘лон не может остатьсЯ на месте
+        // РЎР»РѕРЅ РЅРµ РјРѕР¶РµС‚ РѕСЃС‚Р°С‚СЊСЃСЏ РЅР° РјРµСЃС‚Рµ
         if (line == toLine && column == toColumn) {
             return false;
         }
 
-        // Џроверка, что движение происходит по диагонали
-        int rowDiff = Math.abs(toLine - line);
-        int colDiff = Math.abs(toColumn - column);
-
-        if (rowDiff != colDiff) {
-            return false; // …сли разница по строкам и столбцам не совпадает, движение не по диагонали
+        // РЎР»РѕРЅ РјРѕР¶РµС‚ С…РѕРґРёС‚СЊ С‚РѕР»СЊРєРѕ РїРѕ РґРёР°РіРѕРЅР°Р»Рё
+        if (Math.abs(toLine - line) != Math.abs(toColumn - column)) {
+            return false;
         }
 
-        // Џроверка, что путь свободен
-        int rowDirection = (toLine - line) > 0 ? 1 : -1; // Ќаправление по строкам
-        int colDirection = (toColumn - column) > 0 ? 1 : -1; // Ќаправление по столбцам
-
-        int currentLine = line + rowDirection;
-        int currentColumn = column + colDirection;
-
-        // Џроверка на наличие фигур на пути к целевой позиции
-        while (currentLine != toLine && currentColumn != toColumn) {
-            if (chessBoard.board[currentLine][currentColumn] != null) {
-                return false; // …сли на пути есть фигура, слон не может пройти
-            }
-            currentLine += rowDirection;
-            currentColumn += colDirection;
+        // РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ РїСѓС‚СЊ С‡РёСЃС‚ РѕС‚ С„РёРіСѓСЂ
+        if (!chessBoard.isPathClear(line, column, toLine, toColumn)) {
+            return false;
         }
 
-        // Џроверка на наличие фигуры того же цвета на конечной позиции
-        return chessBoard.board[toLine][toColumn] == null ||
-                !chessBoard.board[toLine][toColumn].getColor().equals(this.color);
-    }
+        // РџСЂРѕРІРµСЂСЏРµРј, РµСЃС‚СЊ Р»Рё РЅР° РєРѕРЅРµС‡РЅРѕР№ РїРѕР·РёС†РёРё С„РёРіСѓСЂР° С‚РѕРіРѕ Р¶Рµ С†РІРµС‚Р°
+        return !chessBoard.isOccupied(toLine, toColumn) ||
+                chessBoard.isOpponentPiece(toLine, toColumn, this.color);
 
-    @Override
-    public String getSymbol() {
-        return "B";
+        // Р’СЃРµ СѓСЃР»РѕРІРёСЏ РІС‹РїРѕР»РЅРµРЅС‹, С…РѕРґ РІРѕР·РјРѕР¶РµРЅ
     }
 }
